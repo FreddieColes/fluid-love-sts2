@@ -19,31 +19,36 @@ cp workshop/preview.png "$STAGE/preview.png" 2>/dev/null || cp FluidLoveBand/mod
 ID=$(cat workshop/id.txt 2>/dev/null || echo 0)
 DESC=$(sed 's/"/\\"/g' workshop/description.txt)
 
-cat > "$STAGE/item.vdf" <<V
-"workshopitem"
+# Description and visibility are only sent on the first upload; after that, edit them on the web page.
 {
-  "appid" "2868840"
-  "publishedfileid" "$ID"
-  "contentfolder" "$STAGE/content"
-  "previewfile" "$STAGE/preview.png"
-  "visibility" "2"
-  "title" "Fluid Love Band"
-  "description" "$DESC"
-  "changenote" "$NOTE"
-}
-V
-[ "$ID" != "0" ] && sed -i '/"visibility"/d; /"description"/d' "$STAGE/item.vdf"
+  echo '"workshopitem"'
+  echo '{'
+  echo '  "appid" "2868840"'
+  echo "  \"publishedfileid\" \"$ID\""
+  echo "  \"contentfolder\" \"$STAGE/content\""
+  echo "  \"previewfile\" \"$STAGE/preview.png\""
+  echo '  "title" "Fluid Love Band"'
+  echo "  \"changenote\" \"$NOTE\""
+  if [ "$ID" = "0" ]; then
+    echo '  "visibility" "2"'
+    echo "  \"description\" \"$DESC\""
+  fi
+  echo '}'
+} > "$STAGE/item.vdf"
 
 read -rp "Steam username: " STEAM_USER
 "$STEAMCMD" +login "$STEAM_USER" +workshop_build_item "$STAGE/item.vdf" +quit | tee logs/publish.log
 
 NEWID=$(grep -oP '"publishedfileid"\s*"\K[0-9]+' "$STAGE/item.vdf")
-if [ -n "$NEWID" ] && [ "$NEWID" != "0" ]; then
+if grep -qiE "ERROR|Failed" logs/publish.log; then
+  echo
+  echo "UPLOAD FAILED (see above). Run ./report.sh and tell Claude."
+elif [ -n "$NEWID" ] && [ "$NEWID" != "0" ]; then
   echo "$NEWID" > workshop/id.txt
-  git add workshop/id.txt && git commit -qm "workshop id $NEWID" && git pull -q --rebase --autostash && git push -q
+  if [ "$ID" = "0" ]; then git add workshop/id.txt && git commit -qm "workshop id $NEWID" && git pull -q --rebase --autostash && git push -q; fi
   echo
   echo "Uploaded. Page: https://steamcommunity.com/sharedfiles/filedetails/?id=$NEWID"
-  echo "It's PRIVATE. On that page: add BaseLib under Required items, then set visibility when ready."
+  [ "$ID" = "0" ] && echo "It's PRIVATE. On that page: add BaseLib under Required items, then set visibility when ready."
 else
   echo "Upload didn't report an ID. Run ./report.sh and tell Claude."
 fi
