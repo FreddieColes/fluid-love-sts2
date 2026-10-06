@@ -1,21 +1,16 @@
-using BaseLib.Patches.UI;
 using Godot;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 
 namespace FluidLoveBand.FluidLoveBandCode.Music;
 
-/// <summary>Registers the Setlist widget with BaseLib's combat-UI hook. Carries no state itself.</summary>
-public sealed class SetlistResource() : BasicCustomResource("FluidLoveBand.Setlist")
-{
-    public override ICustomResourceVisualsHandler ResourceVisualsHandler() => new SetlistDisplay();
-}
-
 /// <summary>
 /// The Setlist on screen: three note slots above the Energy orb, coloured by role, plus a line
 /// that flashes the name of each Song as it plays. Built from stock Godot nodes, driven by events.
+/// It attaches itself to the combat UI the first time the local player's Setlist changes in a
+/// combat, so it needs no hook into the UI build.
 /// </summary>
-public sealed class SetlistDisplay : ICustomResourceVisualsHandler
+public static class SetlistDisplay
 {
     private const float Slot = 30f;
     private const float Gap = 8f;
@@ -25,78 +20,93 @@ public sealed class SetlistDisplay : ICustomResourceVisualsHandler
     private static readonly Color Empty = new("2b2233");
     private static readonly Color Frame = new("c9a0dc");
 
-    private Creature? _creature;
-    private Control? _root;
-    private readonly Panel?[] _slots = new Panel?[SetlistPower.Slots];
-    private readonly Label?[] _letters = new Label?[SetlistPower.Slots];
-    private Label? _song;
-    private Label? _fluid;
-    private Tween? _songTween;
+    private static Control? _root;
+    private static readonly Panel?[] _slots = new Panel?[SetlistPower.Slots];
+    private static readonly Label?[] _letters = new Label?[SetlistPower.Slots];
+    private static Label? _song;
+    private static Label? _fluid;
+    private static Tween? _songTween;
+    private static bool _initialised;
 
-    public void AddDisplay(NCombatUi nCombatUi, PlayerCombatState playerCombatState)
+    public static void Init()
     {
-        var me = CombatManager.Instance?.DebugOnlyGetState() is { } state ? LocalContext.GetMe(state) : null;
-        if (me == null || me.PlayerCombatState != playerCombatState || me.Creature == null) return;
-
-        Reset();
-        _creature = me.Creature;
-        var root = _root = Build();
-        Attach(nCombatUi, root);
-
-        // Only shown once this player actually has a Setlist, so other characters see nothing.
-        root.Visible = false;
-
+        if (_initialised) return;
+        _initialised = true;
         SetlistPower.AnyChanged += OnChanged;
         SetlistPower.AnySongPlayed += OnSong;
-        root.TreeExited += () => { if (_root == root) Reset(); };
-
-        if (_creature.GetPower<SetlistPower>() is { } existing) OnChanged(existing);
     }
 
-    private void Reset()
+    private static bool IsLocal(SetlistPower setlist)
     {
-        SetlistPower.AnyChanged -= OnChanged;
-        SetlistPower.AnySongPlayed -= OnSong;
-        _creature = null;
+        var me = CombatManager.Instance?.DebugOnlyGetState() is { } state ? LocalContext.GetMe(state) : null;
+        return me?.Creature != null && me.Creature == setlist.Owner;
+    }
+
+    private static bool EnsureBuilt()
+    {
+        if (_root != null && GodotObject.IsInstanceValid(_root) && _root.IsInsideTree()) return true;
+
         _root = null;
-        _song = null;
-        _fluid = null;
-        _songTween = null;
-        Array.Clear(_slots);
-        Array.Clear(_letters);
+        if (Godot.Engine.GetMainLoop() is not SceneTree tree) return false;
+        var ui = FindCombatUi(tree.Root);
+        if (ui == null) return false;
+
+        _root = Build();
+        Attach(ui, _root);
+        return true;
     }
 
-    private void OnChanged(SetlistPower setlist)
+    private static NCombatUi? FindCombatUi(Node node)
     {
-        if (setlist.Owner != _creature) return;
-        if (_root == null || !GodotObject.IsInstanceValid(_root)) return;
-        _root.Visible = true;
+        if (node is NCombatUi ui) return ui;
+        foreach (var child in node.GetChildren())
+            if (FindCombatUi(child) is { } found) return found;
+        return null;
+    }
 
-        for (var i = 0; i < SetlistPower.Slots; i++)
+    private static void OnChanged(SetlistPower setlist)
+    {
+        try
         {
-            Role? note = i < setlist.Notes.Count ? setlist.Notes[i] : null;
-            if (_slots[i] is { } slot && GodotObject.IsInstanceValid(slot))
-                slot.AddThemeStyleboxOverride("panel", Box(note == null ? Empty : new Color(RoleInfo.Hex(note.Value)), Frame));
-            if (_letters[i] is { } letter && GodotObject.IsInstanceValid(letter))
-                letter.Text = note == null ? "" : RoleInfo.Name(note.Value)[..1];
-        }
+            if (!IsLocal(setlist) || !EnsureBuilt() || _root == null) return;
 
-        if (_fluid != null && GodotObject.IsInstanceValid(_fluid))
-            _fluid.Text = $"Fluid: {RoleInfo.Name(Cards.BandCard.FluidRoleForTurn(setlist.TurnCount, Role.Lead))}";
+            for (var i = 0; i < SetlistPower.Slots; i++)
+            {
+                Role? note = i < setlist.Notes.Count ? setlist.Notes[i] : null;
+                if (_slots[i] is { } slot && GodotObject.IsInstanceValid(slot))
+                    slot.AddThemeStyleboxOverride("panel", Box(note == null ? Empty : new Color(RoleInfo.Hex(note.Value)), Frame));
+                if (_letters[i] is { } letter && GodotObject.IsInstanceValid(letter))
+                    letter.Text = note == null ? "" : RoleInfo.Name(note.Value)[..1];
+            }
+
+            if (_fluid != null && GodotObject.IsInstanceValid(_fluid))
+                _fluid.Text = $"Fluid: {RoleInfo.Name(Cards.BandCard.FluidRoleForTurn(setlist.TurnCount, Role.Lead))}";
+        }
+        catch (Exception e)
+        {
+            MainFile.Logger.Info($"Setlist display update failed: {e.Message}");
+        }
     }
 
-    private void OnSong(SetlistPower setlist, SongKind kind)
+    private static void OnSong(SetlistPower setlist, SongKind kind)
     {
-        if (setlist.Owner != _creature) return;
-        if (_song == null || !GodotObject.IsInstanceValid(_song)) return;
+        try
+        {
+            if (!IsLocal(setlist) || !EnsureBuilt()) return;
+            if (_song == null || !GodotObject.IsInstanceValid(_song)) return;
 
-        _song.Text = RoleInfo.SongName(kind);
-        _song.Modulate = Colors.White;
-        if (_songTween != null && GodotObject.IsInstanceValid(_songTween)) _songTween.Kill();
-        if (!_song.IsInsideTree()) return;
-        _songTween = _song.CreateTween();
-        _songTween.TweenInterval(1.2);
-        _songTween.TweenProperty(_song, "modulate", new Color(1, 1, 1, 0), 0.6);
+            _song.Text = RoleInfo.SongName(kind);
+            _song.Modulate = Colors.White;
+            if (_songTween != null && GodotObject.IsInstanceValid(_songTween)) _songTween.Kill();
+            if (!_song.IsInsideTree()) return;
+            _songTween = _song.CreateTween();
+            _songTween.TweenInterval(1.2);
+            _songTween.TweenProperty(_song, "modulate", new Color(1, 1, 1, 0), 0.6);
+        }
+        catch (Exception e)
+        {
+            MainFile.Logger.Info($"Setlist song display failed: {e.Message}");
+        }
     }
 
     private static void Attach(NCombatUi nCombatUi, Control root)
@@ -126,7 +136,7 @@ public sealed class SetlistDisplay : ICustomResourceVisualsHandler
         return null;
     }
 
-    private Control Build()
+    private static Control Build()
     {
         var root = new Control
         {

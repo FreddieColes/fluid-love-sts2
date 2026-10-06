@@ -18,6 +18,7 @@ public partial class MainFile : Node
         var assembly = Assembly.GetExecutingAssembly();
         Harmony harmony = new(ModId);
         harmony.PatchAll(assembly);
+        Music.SetlistDisplay.Init();
         Logger.Info("Fluid Love Band loaded. Sound check one two.");
     }
 }
