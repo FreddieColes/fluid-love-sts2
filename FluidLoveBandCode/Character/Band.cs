@@ -3,6 +3,7 @@ using FluidLoveBand.FluidLoveBandCode.Cards;
 using FluidLoveBand.FluidLoveBandCode.Relics;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 
 namespace FluidLoveBand.FluidLoveBandCode.Character;
 
@@ -50,6 +51,15 @@ public class Band : PlaceholderCharacterModel
             return icon;
         }
     }
+
+    /// <summary>The band in combat: one still cut-out of the three of them (amp, singer, keys).</summary>
+    public const string CombatSpritePath = "res://FluidLoveBand/images/charui/band_combat.png";
+
+    public override NCreatureVisuals? CreateCustomVisuals() =>
+        NodeFactory<NCreatureVisuals>.CreateFromResource(CombatSpritePath);
+
+    /// <summary>Character select backdrop: the band on a lit stage.</summary>
+    public override string CustomCharacterSelectBg => "res://FluidLoveBand/scenes/char_select_bg_band.tscn";
 
     public override string CustomIconTexturePath => "character_icon_band.png".CharacterUiPath();
     public override string CustomCharacterSelectIconPath => "char_select_band.png".CharacterUiPath();
