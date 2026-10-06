@@ -23,6 +23,17 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
     /// <summary>True during Perform if this card's note will complete a Song.</summary>
     protected bool IsFinale { get; private set; }
 
+    /// <summary>Role keyword first (printed on the card with a hover tip), then any extras.</summary>
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [BandKeywords.For(BaseRole, IsFluid), .. MoreKeywords];
+
+    /// <summary>Extra keywords for a card, e.g. Exhaust or Retain.</summary>
+    protected virtual IEnumerable<CardKeyword> MoreKeywords => [];
+
+    /// <summary>Every band card explains the Setlist on hover. Cards can add more.</summary>
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(BandTips.Setlist), .. MoreTips];
+
+    protected virtual IEnumerable<IHoverTip> MoreTips => [];
+
     /// <summary>How many notes this card adds. Some cards (and Count In) add more.</summary>
     protected virtual int NotesAdded => 1;
 

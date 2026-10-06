@@ -1,8 +1,8 @@
 {
   "FLUIDLOVEBAND-SETLIST_POWER.title": "Setlist",
-  "FLUIDLOVEBAND-SETLIST_POWER.description": "Every card you play adds its role as a note. 3 notes play a Song: 3 the same is a [gold]Solo[/gold], one of each is a [gold]Full Band[/gold], 2 + 1 is a [gold]Jam[/gold].",
-  "FLUIDLOVEBAND-SETLIST_POWER.smartDescription": "Every card you play adds its role as a note. 3 notes play a Song: 3 the same is a [gold]Solo[/gold], one of each is a [gold]Full Band[/gold], 2 + 1 is a [gold]Jam[/gold].",
+  "FLUIDLOVEBAND-SETLIST_POWER.description": "Every card you play adds its role as a note. 3 notes play a Song: 3 the same is a [gold]Solo[/gold], one of each is a [gold]Full Band[/gold] (+1 [gold]Groove[/gold]), 2 + 1 is a [gold]Jam[/gold]. The bar above your Energy shows what the next note will play.",
+  "FLUIDLOVEBAND-SETLIST_POWER.smartDescription": "Every card you play adds its role as a note. 3 notes play a Song: 3 the same is a [gold]Solo[/gold], one of each is a [gold]Full Band[/gold] (+1 [gold]Groove[/gold]), 2 + 1 is a [gold]Jam[/gold]. The bar above your Energy shows what the next note will play.",
   "FLUIDLOVEBAND-GROOVE_POWER.title": "Groove",
   "FLUIDLOVEBAND-GROOVE_POWER.description": "Your Songs deal 2 more damage and grant 2 more [gold]Block[/gold] per stack.",
-  "FLUIDLOVEBAND-GROOVE_POWER.smartDescription": "Your Songs deal [blue]{Amount}[/blue]x2 more damage and grant [blue]{Amount}[/blue]x2 more [gold]Block[/gold]."
+  "FLUIDLOVEBAND-GROOVE_POWER.smartDescription": "Your Songs deal and grant 2 more per stack. You have [blue]{Amount}[/blue] stacks."
 }

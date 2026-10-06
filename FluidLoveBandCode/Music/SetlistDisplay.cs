@@ -15,7 +15,7 @@ public static class SetlistDisplay
     private const float Slot = 30f;
     private const float Gap = 8f;
     private const float Width = Slot * 3 + Gap * 2;
-    private const float Height = 74f;
+    private const float Height = 112f;
 
     private static readonly Color Empty = new("2b2233");
     private static readonly Color Frame = new("c9a0dc");
@@ -25,6 +25,8 @@ public static class SetlistDisplay
     private static readonly Label?[] _letters = new Label?[SetlistPower.Slots];
     private static Label? _song;
     private static Label? _fluid;
+    private static Label? _effect;
+    private static Label? _preview;
     private static Tween? _songTween;
     private static bool _initialised;
 
@@ -80,12 +82,28 @@ public static class SetlistDisplay
             }
 
             if (_fluid != null && GodotObject.IsInstanceValid(_fluid))
-                _fluid.Text = $"Fluid: {RoleInfo.Name(Cards.BandCard.FluidRoleForTurn(setlist.TurnCount, Role.Lead))}";
+                _fluid.Text = $"Fluid cards play {RoleInfo.Name(Cards.BandCard.FluidRoleForTurn(setlist.TurnCount, Role.Lead))} this turn";
+
+            if (_preview != null && GodotObject.IsInstanceValid(_preview))
+                _preview.Text = Preview(setlist);
         }
         catch (Exception e)
         {
             MainFile.Logger.Info($"Setlist display update failed: {e.Message}");
         }
+    }
+
+    /// <summary>With 2 notes in, shows what each possible third note would play, e.g. "L: Solo  R: Jam  K: Full Band".</summary>
+    private static string Preview(SetlistPower setlist)
+    {
+        if (setlist.Notes.Count != SetlistPower.Slots - 1) return setlist.Notes.Count == 0 ? "Play cards to add notes" : "";
+        var parts = new List<string>();
+        foreach (var role in new[] { Role.Lead, Role.Rhythm, Role.Keys })
+        {
+            var kind = RoleInfo.Classify([.. setlist.Notes, role]);
+            parts.Add($"{RoleInfo.Name(role)[..1]}: {RoleInfo.ShortName(kind)}");
+        }
+        return "Next note: " + string.Join("   ", parts);
     }
 
     private static void OnSong(SetlistPower setlist, SongKind kind)
@@ -95,13 +113,21 @@ public static class SetlistDisplay
             if (!IsLocal(setlist) || !EnsureBuilt()) return;
             if (_song == null || !GodotObject.IsInstanceValid(_song)) return;
 
+            var bonus = Setlist.Groove(setlist.Owner?.Player) * Setlist.GroovePerStack;
             _song.Text = RoleInfo.SongName(kind);
             _song.Modulate = Colors.White;
+            if (_effect != null && GodotObject.IsInstanceValid(_effect))
+            {
+                _effect.Text = RoleInfo.SongEffect(kind, bonus);
+                _effect.Modulate = Colors.White;
+            }
             if (_songTween != null && GodotObject.IsInstanceValid(_songTween)) _songTween.Kill();
             if (!_song.IsInsideTree()) return;
             _songTween = _song.CreateTween();
-            _songTween.TweenInterval(1.2);
-            _songTween.TweenProperty(_song, "modulate", new Color(1, 1, 1, 0), 0.6);
+            _songTween.TweenInterval(2.0);
+            _songTween.TweenProperty(_song, "modulate", new Color(1, 1, 1, 0), 0.8);
+            if (_effect != null && GodotObject.IsInstanceValid(_effect))
+                _songTween.Parallel().TweenProperty(_effect, "modulate", new Color(1, 1, 1, 0), 0.8);
         }
         catch (Exception e)
         {
@@ -146,12 +172,14 @@ public static class SetlistDisplay
             MouseFilter = Control.MouseFilterEnum.Ignore,
         };
 
-        _song = MakeLabel("Song", "", new Vector2(-40f, 0f), new Vector2(Width + 80f, 20f), 18, new Color("ffe08a"));
+        _song = MakeLabel("Song", "", new Vector2(-80f, 0f), new Vector2(Width + 160f, 24f), 22, new Color("ffe08a"));
         root.AddChild(_song);
+        _effect = MakeLabel("Effect", "", new Vector2(-120f, 24f), new Vector2(Width + 240f, 18f), 14, new Color("ffffff"));
+        root.AddChild(_effect);
 
         for (var i = 0; i < SetlistPower.Slots; i++)
         {
-            var pos = new Vector2(i * (Slot + Gap), 22f);
+            var pos = new Vector2(i * (Slot + Gap), 46f);
             var slot = new Panel
             {
                 Name = $"Note{i}",
@@ -169,7 +197,9 @@ public static class SetlistDisplay
             _letters[i] = letter;
         }
 
-        _fluid = MakeLabel("Fluid", "", new Vector2(-30f, 56f), new Vector2(Width + 60f, 18f), 13, new Color("c9a0dc"));
+        _preview = MakeLabel("Preview", "", new Vector2(-120f, 80f), new Vector2(Width + 240f, 16f), 13, new Color("ffe08a"));
+        root.AddChild(_preview);
+        _fluid = MakeLabel("Fluid", "", new Vector2(-120f, 96f), new Vector2(Width + 240f, 16f), 12, new Color("c9a0dc"));
         root.AddChild(_fluid);
         return root;
     }

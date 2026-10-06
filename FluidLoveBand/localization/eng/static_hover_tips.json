@@ -1,1 +1,6 @@
-{}
+{
+  "FLUIDLOVEBAND-SETLIST.title": "Setlist",
+  "FLUIDLOVEBAND-SETLIST.description": "Every card you play adds its role as a note. When 3 notes are in, the band plays a Song:\n[gold]Solo[/gold]: 3 the same. The big one.\n[gold]Full Band[/gold]: one of each. Gain 1 [gold]Groove[/gold], deal 4 damage to ALL, gain 4 [gold]Block[/gold].\n[gold]Jam[/gold]: 2 + 1. Half a Solo of the doubled role.",
+  "FLUIDLOVEBAND-GROOVE.title": "Groove",
+  "FLUIDLOVEBAND-GROOVE.description": "Each stack makes your Songs deal 2 more damage and grant 2 more [gold]Block[/gold]. Lasts all combat."
+}
