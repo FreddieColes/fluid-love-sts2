@@ -154,5 +154,11 @@
   "FLUIDLOVEBAND-NOTE_KEYS.title": "Keys Note",
   "FLUIDLOVEBAND-NOTE_KEYS.description": "Choose [gold]Keys[/gold].",
   "FLUIDLOVEBAND-CHANNEL_THREE_SIX_NINE.title": "Ch.369",
-  "FLUIDLOVEBAND-CHANNEL_THREE_SIX_NINE.description": "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].\nDraw 1 card."
+  "FLUIDLOVEBAND-CHANNEL_THREE_SIX_NINE.description": "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].\nDraw 1 card.",
+  "FLUIDLOVEBAND-READY_FOR_BUSINESS.title": "Ready For Business",
+  "FLUIDLOVEBAND-READY_FOR_BUSINESS.description": "At the start of your turn, gain 1 Energy.\nThe first Song you play each turn is played twice.",
+  "FLUIDLOVEBAND-BACKWATER_CRIMES.title": "Backwater Crimes",
+  "FLUIDLOVEBAND-BACKWATER_CRIMES.description": "Deal {Damage:diff()} damage to ALL enemies 3 times.\nGain 1 [gold]Groove[/gold].",
+  "FLUIDLOVEBAND-PLEASURE_ISLAND_DLC.title": "Pleasure Island DLC",
+  "FLUIDLOVEBAND-PLEASURE_ISLAND_DLC.description": "Add 2 random Rare band cards to your hand. They cost 0 this turn."
 }

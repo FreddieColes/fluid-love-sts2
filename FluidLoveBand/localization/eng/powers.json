@@ -49,5 +49,8 @@
   "FLUIDLOVEBAND-NEXT_TURN_BLOCK_POWER.smartDescription": "Next turn, gain [blue]{Amount}[/blue] Block.",
   "FLUIDLOVEBAND-MATTER_OF_TIME_POWER.title": "Matter of Time",
   "FLUIDLOVEBAND-MATTER_OF_TIME_POWER.description": "Next turn, gain 1 Energy and draw X card(s).",
-  "FLUIDLOVEBAND-MATTER_OF_TIME_POWER.smartDescription": "Next turn, gain 1 Energy and draw [blue]{Amount}[/blue] card(s)."
+  "FLUIDLOVEBAND-MATTER_OF_TIME_POWER.smartDescription": "Next turn, gain 1 Energy and draw [blue]{Amount}[/blue] card(s).",
+  "FLUIDLOVEBAND-READY_FOR_BUSINESS_POWER.title": "Ready For Business",
+  "FLUIDLOVEBAND-READY_FOR_BUSINESS_POWER.description": "At the start of your turn, gain 1 Energy. Your first Song each turn is played twice.",
+  "FLUIDLOVEBAND-READY_FOR_BUSINESS_POWER.smartDescription": "At the start of your turn, gain 1 Energy. Your first Song each turn is played twice."
 }

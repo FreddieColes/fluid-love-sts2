@@ -116,6 +116,7 @@ public static class Setlist
         var times = 1;
         if (RoleInfo.IsSolo(kind) && creature.GetPower<HeadlinerPower>() != null) times++;
         if (!echo && setlist is { SongsThisCombat: 0 } && HasRelic<Relics.SetlistPaper>(player)) times++;
+        if (!echo && setlist is { SongsThisTurn: 0 } && creature.GetPower<ReadyForBusinessPower>() != null) times++;
 
         for (var i = 0; i < times; i++) await PlayOnce(ctx, player, creature, kind);
 

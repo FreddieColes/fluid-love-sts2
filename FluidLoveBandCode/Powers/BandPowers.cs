@@ -112,3 +112,16 @@ public sealed class MatterOfTimePower : BandBuff
         await PowerCmd.Remove(this);
     }
 }
+
+/// <summary>Ready For Business: gain 1 Energy each turn; your first Song each turn is played twice (read by Setlist).</summary>
+public sealed class ReadyForBusinessPower : BandBuff
+{
+    public override PowerStackType StackType => PowerStackType.Single;
+
+    public override async Task AfterEnergyReset(Player player)
+    {
+        if (player != Owner.Player) return;
+        Flash();
+        await PlayerCmd.GainEnergy(1, player);
+    }
+}

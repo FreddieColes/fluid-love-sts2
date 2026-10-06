@@ -167,3 +167,44 @@ public sealed class KeyChange() : BandCard(0, CardType.Skill, CardRarity.Rare, T
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
 }
+
+// ---- Album cards. Rare, strong, and wearing the actual album covers.
+
+/// <summary>Ready For Business: each turn gain 1 Energy, and your first Song each turn plays twice.</summary>
+public sealed class ReadyForBusiness() : BandPowerCard(3, CardRarity.Rare, Role.Rhythm)
+{
+    protected override Task ApplyPower(PlayerChoiceContext ctx, decimal amount) => Buff<ReadyForBusinessPower>(ctx, 1m);
+}
+
+/// <summary>Backwater Crimes: hit ALL enemies three times, then gain Groove.</summary>
+public sealed class BackwaterCrimes() : BandCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, Role.Lead)
+{
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
+    protected override IEnumerable<IHoverTip> MoreTips => [HoverTipFactory.Static(BandTips.Groove)];
+    protected override async Task Perform(PlayerChoiceContext ctx, CardPlay play)
+    {
+        for (var i = 0; i < 3; i++) await HitAll(ctx, DynamicVars.Damage.BaseValue);
+        await Buff<GroovePower>(ctx, 1);
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
+}
+
+/// <summary>Pleasure Island DLC: bonus content. Add 2 random Rare band cards to your hand, free this turn.</summary>
+public sealed class PleasureIslandDlc() : BandCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self, Role.Keys)
+{
+    protected override IEnumerable<CardKeyword> MoreKeywords => [CardKeyword.Exhaust];
+    protected override async Task Perform(PlayerChoiceContext ctx, CardPlay play)
+    {
+        var pool = Owner.Character.CardPool
+            .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
+            .Where(c => c is BandCard and not NoteToken and not PleasureIslandDlc && c.Rarity == CardRarity.Rare)
+            .ToList();
+        var cards = MegaCrit.Sts2.Core.Factories.CardFactory.GetDistinctForCombat(Owner, pool, 2, Owner.RunState.Rng.CombatCardGeneration).ToList();
+        foreach (var card in cards)
+        {
+            card.SetToFreeThisTurn();
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
+        }
+    }
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+}
