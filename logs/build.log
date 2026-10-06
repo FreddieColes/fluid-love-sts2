@@ -1,0 +1,52 @@
+== Tue Oct  6 08:35:07 AM UTC 2026 build
+== Godot import
+[  18% ] [90m[1mreimport[22m | setlist_power.png[39m[0m
+[  21% ] [90m[1mreimport[22m | backing_track.png[39m[0m
+[  24% ] [90m[1mreimport[22m | click_track.png[39m[0m
+[  27% ] [90m[1mreimport[22m | relic.png[39m[0m
+[  29% ] [90m[1mreimport[22m | backing_track.png[39m[0m
+[  32% ] [90m[1mreimport[22m | backing_track_outline.png[39m[0m
+[  35% ] [90m[1mreimport[22m | click_track.png[39m[0m
+[  37% ] [90m[1mreimport[22m | click_track_outline.png[39m[0m
+[  40% ] [90m[1mreimport[22m | relic.png[39m[0m
+[  43% ] [90m[1mreimport[22m | relic_outline.png[39m[0m
+[  45% ] [90m[1mreimport[22m | mod_image.png[39m[0m
+[  48% ] [90m[1mreimport[22m | card.png[39m[0m
+[  51% ] [90m[1mreimport[22m | role_fluid.png[39m[0m
+[  54% ] [90m[1mreimport[22m | role_keys.png[39m[0m
+[  56% ] [90m[1mreimport[22m | role_lead.png[39m[0m
+[  59% ] [90m[1mreimport[22m | role_rhythm.png[39m[0m
+[  62% ] [90m[1mreimport[22m | card.png[39m[0m
+[  64% ] [90m[1mreimport[22m | role_fluid.png[39m[0m
+[  67% ] [90m[1mreimport[22m | role_keys.png[39m[0m
+[  70% ] [90m[1mreimport[22m | role_lead.png[39m[0m
+[  72% ] [90m[1mreimport[22m | role_rhythm.png[39m[0m
+[  75% ] [90m[1mreimport[22m | big_energy.png[39m[0m
+[  78% ] [90m[1mreimport[22m | character_icon_band.png[39m[0m
+[  81% ] [90m[1mreimport[22m | char_select_band.png[39m[0m
+[  83% ] [90m[1mreimport[22m | char_select_band_locked.png[39m[0m
+[  86% ] [90m[1mreimport[22m | map_marker_band.png[39m[0m
+[  89% ] [90m[1mreimport[22m | text_energy.png[39m[0m
+[  91% ] [90m[1mreimport[22m | pint_of_cider.png[39m[0m
+[  94% ] [90m[1mreimport[22m | potion.png[39m[0m
+[  97% ] [90m[1mreimport[22m | Finalizing Asset Import...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (36 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing post-reimport operations...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+== dotnet publish
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Updated BaseLib dependency version in mod manifest json to version 
+/workspaces/fluid-love-sts2/FluidLoveBandCode/Music/SetlistDisplay.cs(18,38): error CS0246: The type or namespace name 'ICustomResourceVisualsHandler' could not be found (are you missing a using directive or an assembly reference?) [/workspaces/fluid-love-sts2/FluidLoveBand.csproj]
+/workspaces/fluid-love-sts2/FluidLoveBandCode/Music/SetlistDisplay.cs(11,21): error CS0246: The type or namespace name 'ICustomResourceVisualsHandler' could not be found (are you missing a using directive or an assembly reference?) [/workspaces/fluid-love-sts2/FluidLoveBand.csproj]
+/workspaces/fluid-love-sts2/FluidLoveBandCode/Music/SetlistDisplay.cs(11,51): error CS0115: 'SetlistResource.ResourceVisualsHandler()': no suitable method found to override [/workspaces/fluid-love-sts2/FluidLoveBand.csproj]
+missing: FluidLoveBand.dll
+missing: FluidLoveBand.json
+missing: FluidLoveBand.pck
