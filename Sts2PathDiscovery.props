@@ -1,0 +1,14 @@
+<Project>
+    <!--
+      Codespace-friendly path discovery.
+      Directory.Build.props (written by setup.sh) sets Sts2Path, GodotPath and ModsPath.
+      Anything already set is left alone.
+    -->
+    <PropertyGroup>
+        <Sts2Path Condition="'$(Sts2Path)' == ''">/workspaces/sts2-game</Sts2Path>
+        <Sts2DataDir Condition="'$(Sts2DataDir)' == '' and Exists('$(Sts2Path)/data_sts2_windows_x86_64/sts2.dll')">$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+        <Sts2DataDir Condition="'$(Sts2DataDir)' == '' and Exists('$(Sts2Path)/data_sts2_linuxbsd_x86_64/sts2.dll')">$(Sts2Path)/data_sts2_linuxbsd_x86_64</Sts2DataDir>
+        <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+        <ModsPath Condition="'$(ModsPath)' == ''">$(MSBuildProjectDirectory)/out/mods/</ModsPath>
+    </PropertyGroup>
+</Project>

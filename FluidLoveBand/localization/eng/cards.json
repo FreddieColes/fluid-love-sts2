@@ -1,0 +1,10 @@
+{
+  "FLUIDLOVEBAND-STRIKE_BAND.title": "Strike",
+  "FLUIDLOVEBAND-STRIKE_BAND.description": "[gold]Lead[/gold].\nDeal {Damage:diff()} damage.",
+  "FLUIDLOVEBAND-DEFEND_BAND.title": "Defend",
+  "FLUIDLOVEBAND-DEFEND_BAND.description": "[gold]Rhythm[/gold].\nGain {Block:diff()} [gold]Block[/gold].",
+  "FLUIDLOVEBAND-TUNE_UP.title": "Tune Up",
+  "FLUIDLOVEBAND-TUNE_UP.description": "[gold]Keys[/gold].\nDraw {Cards:diff()} card(s).",
+  "FLUIDLOVEBAND-SOUNDCHECK.title": "Soundcheck",
+  "FLUIDLOVEBAND-SOUNDCHECK.description": "[gold]Fluid[/gold].\nDeal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold]."
+}

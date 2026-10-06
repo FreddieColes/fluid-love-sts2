@@ -1,0 +1,8 @@
+{
+  "FLUIDLOVEBAND-BACKING_TRACK.title": "Backing Track",
+  "FLUIDLOVEBAND-BACKING_TRACK.description": "At the start of each combat, add a [gold]Rhythm[/gold] note to your Setlist.",
+  "FLUIDLOVEBAND-BACKING_TRACK.flavor": "A laptop, a click, and a drummer who never asks for a cut of the door.",
+  "FLUIDLOVEBAND-CLICK_TRACK.title": "Click Track",
+  "FLUIDLOVEBAND-CLICK_TRACK.description": "At the start of each turn, if your Setlist is empty, add a [gold]Rhythm[/gold] note.",
+  "FLUIDLOVEBAND-CLICK_TRACK.flavor": "Tick. Tick. Tick. Tick."
+}

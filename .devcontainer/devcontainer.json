@@ -1,0 +1,9 @@
+{
+  "name": "Fluid Love Band StS2 mod",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-9.0",
+  "hostRequirements": { "cpus": 4, "memory": "8gb", "storage": "32gb" },
+  "postCreateCommand": "chmod +x *.sh",
+  "customizations": {
+    "vscode": { "extensions": ["ms-dotnettools.csharp"] }
+  }
+}

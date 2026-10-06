@@ -1,0 +1,16 @@
+{
+  "FLUIDLOVEBAND-BAND.title": "The Fluid Love Band",
+  "FLUIDLOVEBAND-BAND.titleObject": "The Fluid Love Band",
+  "FLUIDLOVEBAND-BAND.description": "[gold]The Setlist[/gold]: Alex, Toby and Freddie, plus a laptop running the drum track. A country rock folk electric disco band playing their way up the Spire. Every card adds a note; three notes make a Song.",
+  "FLUIDLOVEBAND-BAND.pronounSubject": "they",
+  "FLUIDLOVEBAND-BAND.pronounObject": "them",
+  "FLUIDLOVEBAND-BAND.possessiveAdjective": "their",
+  "FLUIDLOVEBAND-BAND.pronounPossessive": "theirs",
+  "FLUIDLOVEBAND-BAND.goldMonologue": "[sine]Petrol money. Maybe a new set of strings.[/sine]",
+  "FLUIDLOVEBAND-BAND.eventDeathPrevention": "Not yet. We have not played the encore.",
+  "FLUIDLOVEBAND-BAND.aromaPrinciple": "[sine][blue]Smoke machine, spilt cider, and a warm amp.[/blue][/sine]",
+  "FLUIDLOVEBAND-BAND.cardsModifierTitle": "Fluid Love Band",
+  "FLUIDLOVEBAND-BAND.cardsModifierDescription": "Fluid Love Band cards will now appear in rewards and shops.",
+  "FLUIDLOVEBAND-BAND.banter.alive.endTurnPing": "One, two, three, four!",
+  "FLUIDLOVEBAND-BAND.banter.dead.endTurnPing": "...still in tune."
+}
