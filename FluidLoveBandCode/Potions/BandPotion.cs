@@ -22,3 +22,21 @@ public sealed class PintOfCider : BandPotion
         await PowerCmd.Apply<GroovePower>(ctx, me, 2m, me, null);
     }
 }
+
+/// <summary>Encore: play your last Song again.</summary>
+public sealed class ThroatSpray : BandPotion
+{
+    public override PotionRarity Rarity => PotionRarity.Uncommon;
+    protected override Task OnUse(PlayerChoiceContext ctx, Creature? target) => Setlist.Encore(ctx, Owner);
+}
+
+/// <summary>Choose a role: every card in your hand plays it this combat. Gain 10 Block.</summary>
+public sealed class SmokeMachine : BandPotion
+{
+    public override PotionRarity Rarity => PotionRarity.Rare;
+    protected override async Task OnUse(PlayerChoiceContext ctx, Creature? target)
+    {
+        if (await RoleChooser.Choose(ctx, Owner) is { } role) RoleChooser.RetuneHand(Owner, role);
+        await Setlist.Block(Owner.Creature, 10);
+    }
+}

@@ -56,3 +56,46 @@ public sealed class ClickTrack : BandRelic
         await Setlist.AddNote(ctx, Owner, Role.Rhythm);
     }
 }
+
+/// <summary>The first Song each combat is played twice. (Read by Setlist.PlaySong.)</summary>
+public sealed class SetlistPaper : BandRelic
+{
+    public override RelicRarity Rarity => RelicRarity.Common;
+}
+
+/// <summary>Fluid cards also give 3 Block when played. (Read by BandCard.)</summary>
+public sealed class GafferTape : BandRelic
+{
+    public override RelicRarity Rarity => RelicRarity.Common;
+}
+
+/// <summary>Your Lead Solos deal 5 more damage. (Read by Setlist.PlaySong.)</summary>
+public sealed class Plectrum : BandRelic
+{
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
+}
+
+/// <summary>Start each combat with 1 Groove.</summary>
+public sealed class TheRider : BandRelic
+{
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
+
+    protected override async Task OnCombatOpening(PlayerChoiceContext ctx)
+    {
+        Flash();
+        await PowerCmd.Apply<GroovePower>(ctx, Owner.Creature, 1m, Owner.Creature, null);
+    }
+}
+
+/// <summary>Rare. Gain 1 Energy each turn. Your Jams do nothing.</summary>
+public sealed class OlMacsBanjo : BandRelic
+{
+    public override RelicRarity Rarity => RelicRarity.Rare;
+
+    public override async Task AfterEnergyReset(Player player)
+    {
+        if (player != Owner) return;
+        Flash();
+        await PlayerCmd.GainEnergy(1, player);
+    }
+}

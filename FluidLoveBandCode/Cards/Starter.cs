@@ -49,3 +49,15 @@ public sealed class Soundcheck() : BandCard(1, CardType.Attack, CardRarity.Basic
         DynamicVars.Block.UpgradeValueBy(2m);
     }
 }
+
+// ---- Note tokens: only ever shown on the Retune / Key Change choice screen.
+
+public abstract class NoteToken(Role role) : BandCard(-1, CardType.Skill, CardRarity.Basic, TargetType.Self, role)
+{
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [BandKeywords.For(BaseRole, false), CardKeyword.Unplayable];
+    protected override Task Perform(PlayerChoiceContext ctx, CardPlay play) => Task.CompletedTask;
+}
+
+public sealed class NoteLead() : NoteToken(Role.Lead) { }
+public sealed class NoteRhythm() : NoteToken(Role.Rhythm) { }
+public sealed class NoteKeys() : NoteToken(Role.Keys) { }

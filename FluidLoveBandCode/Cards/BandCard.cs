@@ -12,7 +12,12 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
     : CustomCardModel(cost, type, rarity, target)
 {
     public Role BaseRole { get; } = role;
-    public bool IsFluid { get; } = fluid;
+    public bool PrintedFluid { get; } = fluid;
+
+    /// <summary>Set by the rare "Fluid Love": this card is Fluid for the rest of combat.</summary>
+    public bool FluidOverride { get; set; }
+
+    public bool IsFluid => PrintedFluid || FluidOverride;
 
     /// <summary>Set by Retune. Overrides the printed role for the rest of combat.</summary>
     public Role? RetunedRole { get; set; }
@@ -24,7 +29,7 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
     protected bool IsFinale { get; private set; }
 
     /// <summary>Role keyword first (printed on the card with a hover tip), then any extras.</summary>
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [BandKeywords.For(BaseRole, IsFluid), .. MoreKeywords];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [BandKeywords.For(BaseRole, PrintedFluid), .. MoreKeywords];
 
     /// <summary>Extra keywords for a card, e.g. Exhaust or Retain.</summary>
     protected virtual IEnumerable<CardKeyword> MoreKeywords => [];
@@ -51,7 +56,7 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
     }
 
     private string Slug => Id.Entry.RemovePrefix().ToLowerInvariant();
-    private string RoleArt => $"role_{(IsFluid ? "fluid" : RoleInfo.Name(BaseRole).ToLowerInvariant())}.png";
+    private string RoleArt => $"role_{(PrintedFluid ? "fluid" : RoleInfo.Name(BaseRole).ToLowerInvariant())}.png";
 
     // Normal art 1000x760, small 250x190. Missing art falls back to the role placeholder.
     public override string CustomPortraitPath => $"{Slug}.png".BigCardImagePath(RoleArt);
@@ -64,9 +69,18 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
         WasOpener = notes == 0;
         IsFinale = notes == SetlistPower.Slots - 1;
 
+        // Count In's bonus belongs to the card played after it, so take it before this card's effect.
+        var setlist = Music.Setlist.Get(Owner);
+        var extra = setlist?.ExtraNotesNextCard ?? 0;
+        if (setlist != null) setlist.ExtraNotesNextCard = 0;
+
+        var role = CurrentRole;
         await Perform(ctx, play);
 
-        await Music.Setlist.AddNotes(ctx, Owner, CurrentRole, NotesAdded, this);
+        if (IsFluid && Owner.Relics.Any(r => r is Relics.GafferTape))
+            await Music.Setlist.Block(Owner.Creature, 3);
+
+        await Music.Setlist.AddNotes(ctx, Owner, role, NotesAdded + extra, this);
     }
 
     protected abstract Task Perform(PlayerChoiceContext ctx, CardPlay play);
@@ -82,4 +96,25 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
     protected Task Block(CardPlay play) => CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
 
     protected Task Draw(PlayerChoiceContext ctx, int count) => CardPileCmd.Draw(ctx, count, Owner);
+
+    protected IReadOnlyList<Creature> Enemies => Music.Setlist.Enemies(Owner.Creature);
+
+    protected async Task HitAll(PlayerChoiceContext ctx, decimal amount)
+    {
+        foreach (var enemy in Enemies.ToList())
+            await DamageCmd.Attack(amount).FromCard(this).Targeting(enemy).Execute(ctx);
+    }
+
+    protected Task Debuff<T>(PlayerChoiceContext ctx, Creature target, decimal amount) where T : PowerModel =>
+        PowerCmd.Apply<T>(ctx, target, amount, Owner.Creature, this);
+
+    protected Task Buff<T>(PlayerChoiceContext ctx, decimal amount) where T : PowerModel =>
+        PowerCmd.Apply<T>(ctx, Owner.Creature, amount, Owner.Creature, this);
+
+    protected Task Energy(decimal amount) => PlayerCmd.GainEnergy(amount, Owner);
+
+    protected IReadOnlyList<CardModel> HandExceptThis =>
+        PileType.Hand.GetPile(Owner).Cards.Where(c => c != this).ToList();
+
+    protected int V(string name) => DynamicVars[name].IntValue;
 }

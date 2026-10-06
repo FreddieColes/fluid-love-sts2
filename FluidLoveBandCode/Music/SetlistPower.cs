@@ -22,6 +22,15 @@ public sealed class SetlistPower : BandPower
     public int SongsThisCombat { get; set; }
     public Role? LastNote { get; set; }
 
+    /// <summary>To My Darlin': the next Song is a Full Band whatever the mix.</summary>
+    public bool ForceFullBand { get; set; }
+
+    /// <summary>Count In: the next band card adds this many extra notes.</summary>
+    public int ExtraNotesNextCard { get; set; }
+
+    /// <summary>Gaffer Tape / role counters for relics.</summary>
+    public int LeadCardsThisCombat { get; set; }
+
     /// <summary>Raised whenever any Setlist changes. The widget listens to this.</summary>
     public static event Action<SetlistPower>? AnyChanged;
 
@@ -46,6 +55,9 @@ public sealed class SetlistPower : BandPower
         SongsThisTurn = 0;
         SongsThisCombat = 0;
         LastNote = null;
+        ForceFullBand = false;
+        ExtraNotesNextCard = 0;
+        LeadCardsThisCombat = 0;
         Changed();
     }
 

@@ -3,7 +3,7 @@
   "name": "Fluid Love Band",
   "author": "Freddie Coles",
   "description": "Play as the Fluid Love Band: a country rock folk electric disco trio. Every card adds a note to your Setlist; fill it to play a Song.",
-  "version": "v0.1.1",
+  "version": "v0.2.0",
   "min_game_version": "0.107.0",
   "has_pck": true,
   "has_dll": true,

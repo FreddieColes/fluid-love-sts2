@@ -1,7 +1,9 @@
 global using BaseLib.Abstracts;
 global using BaseLib.Extensions;
 global using BaseLib.Utils;
+global using MegaCrit.Sts2.Core.CardSelection;
 global using MegaCrit.Sts2.Core.Combat;
+global using MegaCrit.Sts2.Core.Localization;
 global using MegaCrit.Sts2.Core.Commands;
 global using MegaCrit.Sts2.Core.Entities.Cards;
 global using MegaCrit.Sts2.Core.Entities.Creatures;

@@ -4,5 +4,20 @@
   "FLUIDLOVEBAND-BACKING_TRACK.flavor": "A laptop, a click, and a drummer who never asks for a cut of the door.",
   "FLUIDLOVEBAND-CLICK_TRACK.title": "Click Track",
   "FLUIDLOVEBAND-CLICK_TRACK.description": "At the start of each turn, if your Setlist is empty, add a [gold]Rhythm[/gold] note.",
-  "FLUIDLOVEBAND-CLICK_TRACK.flavor": "Tick. Tick. Tick. Tick."
+  "FLUIDLOVEBAND-CLICK_TRACK.flavor": "Tick. Tick. Tick. Tick.",
+  "FLUIDLOVEBAND-SETLIST_PAPER.title": "Setlist Paper",
+  "FLUIDLOVEBAND-SETLIST_PAPER.description": "The first Song each combat is played twice.",
+  "FLUIDLOVEBAND-SETLIST_PAPER.flavor": "Gaffer-taped to the stage floor. Mostly legible.",
+  "FLUIDLOVEBAND-GAFFER_TAPE.title": "Gaffer Tape",
+  "FLUIDLOVEBAND-GAFFER_TAPE.description": "[gold]Fluid[/gold] cards also give 3 [gold]Block[/gold] when played.",
+  "FLUIDLOVEBAND-GAFFER_TAPE.flavor": "Holds the whole band together.",
+  "FLUIDLOVEBAND-PLECTRUM.title": "Plectrum",
+  "FLUIDLOVEBAND-PLECTRUM.description": "Your [gold]Lead Solos[/gold] deal 5 more damage.",
+  "FLUIDLOVEBAND-PLECTRUM.flavor": "Alex has lost forty of these.",
+  "FLUIDLOVEBAND-THE_RIDER.title": "The Rider",
+  "FLUIDLOVEBAND-THE_RIDER.description": "Start each combat with 1 [gold]Groove[/gold].",
+  "FLUIDLOVEBAND-THE_RIDER.flavor": "Two crates of cider and a bowl of green M&Ms.",
+  "FLUIDLOVEBAND-OL_MACS_BANJO.title": "Ol' Mac's Banjo",
+  "FLUIDLOVEBAND-OL_MACS_BANJO.description": "Gain 1 Energy at the start of each turn. Your [gold]Jams[/gold] do nothing.",
+  "FLUIDLOVEBAND-OL_MACS_BANJO.flavor": "Five strings, four in tune."
 }

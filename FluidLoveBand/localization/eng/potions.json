@@ -1,4 +1,8 @@
 {
   "FLUIDLOVEBAND-PINT_OF_CIDER.title": "Pint of Cider",
-  "FLUIDLOVEBAND-PINT_OF_CIDER.description": "Gain 2 [gold]Groove[/gold]."
+  "FLUIDLOVEBAND-PINT_OF_CIDER.description": "Gain 2 [gold]Groove[/gold].",
+  "FLUIDLOVEBAND-THROAT_SPRAY.title": "Throat Spray",
+  "FLUIDLOVEBAND-THROAT_SPRAY.description": "[gold]Encore[/gold]: play your last Song again.",
+  "FLUIDLOVEBAND-SMOKE_MACHINE.title": "Smoke Machine",
+  "FLUIDLOVEBAND-SMOKE_MACHINE.description": "Choose a role. Every card in your hand plays it this combat. Gain 10 [gold]Block[/gold]."
 }
