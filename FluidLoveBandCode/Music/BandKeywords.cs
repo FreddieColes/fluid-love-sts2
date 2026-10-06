@@ -26,4 +26,6 @@ public static class BandTips
 {
     [CustomEnum] public static StaticHoverTip Setlist;
     [CustomEnum] public static StaticHoverTip Groove;
+    [CustomEnum] public static StaticHoverTip Songs;
+    [CustomEnum] public static StaticHoverTip Words;
 }

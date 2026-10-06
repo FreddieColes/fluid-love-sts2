@@ -34,8 +34,8 @@ public abstract class BandCard(int cost, CardType type, CardRarity rarity, Targe
     /// <summary>Extra keywords for a card, e.g. Exhaust or Retain.</summary>
     protected virtual IEnumerable<CardKeyword> MoreKeywords => [];
 
-    /// <summary>Every band card explains the Setlist on hover. Cards can add more.</summary>
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(BandTips.Setlist), .. MoreTips];
+    /// <summary>The full Setlist rules live on the Setlist panel's hover; cards only add their own extras.</summary>
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => MoreTips;
 
     protected virtual IEnumerable<IHoverTip> MoreTips => [];
 

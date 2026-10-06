@@ -67,19 +67,19 @@ public static class RoleInfo
     /// <summary>What a Song does, with the Groove bonus already added. Shown on screen when it plays.</summary>
     public static string SongEffect(SongKind kind, int bonus) => kind switch
     {
-        SongKind.LeadSolo => $"{Setlist.SoloDamage + bonus} damage to ALL enemies",
-        SongKind.RhythmSolo => $"Gain {Setlist.SoloBlock + bonus} Block",
-        SongKind.KeysSolo => $"Draw {Setlist.SoloDraw}, gain {Setlist.SoloEnergy} Energy",
-        SongKind.LeadJam => $"{Setlist.JamDamage + bonus / 2} damage to ALL enemies",
-        SongKind.RhythmJam => $"Gain {Setlist.JamBlock + bonus / 2} Block",
+        SongKind.LeadSolo => $"{Setlist.SoloDamage + bonus} dmg to ALL",
+        SongKind.RhythmSolo => $"+{Setlist.SoloBlock + bonus} Block",
+        SongKind.KeysSolo => $"Draw {Setlist.SoloDraw}, +{Setlist.SoloEnergy} Energy",
+        SongKind.LeadJam => $"{Setlist.JamDamage + bonus / 2} dmg to ALL",
+        SongKind.RhythmJam => $"+{Setlist.JamBlock + bonus / 2} Block",
         SongKind.KeysJam => $"Draw {Setlist.JamDraw}",
-        SongKind.FullBand => $"+1 Groove, {Setlist.FullBandDamage + bonus} damage to ALL, {Setlist.FullBandBlock + bonus} Block",
+        SongKind.FullBand => $"+1 Groove, {Setlist.FullBandDamage + bonus} dmg ALL, +{Setlist.FullBandBlock + bonus} Block",
         _ => "",
     };
 
     /// <summary>Short name for the preview line: "Solo", "Jam", "Full Band".</summary>
     public static string ShortName(SongKind kind) =>
-        IsSolo(kind) ? "Solo" : IsJam(kind) ? "Jam" : kind == SongKind.FullBand ? "Full Band" : "";
+        IsSolo(kind) ? "Solo" : IsJam(kind) ? "Jam" : kind == SongKind.FullBand ? "Band" : "";
 
     public static Role? RoleOf(SongKind kind) => kind switch
     {

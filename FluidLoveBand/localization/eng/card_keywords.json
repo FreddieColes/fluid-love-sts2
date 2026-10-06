@@ -1,10 +1,10 @@
 {
   "FLUIDLOVEBAND-LEAD.title": "Lead",
-  "FLUIDLOVEBAND-LEAD.description": "Alex on vocals and guitar. Adds a [gold]Lead[/gold] note to your Setlist. 3 Lead notes play a [gold]Lead Solo[/gold]: 10 damage to ALL enemies.",
+  "FLUIDLOVEBAND-LEAD.description": "Adds a [gold]Lead[/gold] note to your Setlist.",
   "FLUIDLOVEBAND-RHYTHM.title": "Rhythm",
-  "FLUIDLOVEBAND-RHYTHM.description": "Toby on guitar and bass, plus the drum track. Adds a [gold]Rhythm[/gold] note to your Setlist. 3 Rhythm notes play a [gold]Rhythm Solo[/gold]: gain 10 [gold]Block[/gold].",
+  "FLUIDLOVEBAND-RHYTHM.description": "Adds a [gold]Rhythm[/gold] note to your Setlist.",
   "FLUIDLOVEBAND-KEYS.title": "Keys",
-  "FLUIDLOVEBAND-KEYS.description": "Freddie on keyboard. Adds a [gold]Keys[/gold] note to your Setlist. 3 Keys notes play a [gold]Keys Solo[/gold]: draw 2 cards and gain 1 Energy.",
+  "FLUIDLOVEBAND-KEYS.description": "Adds a [gold]Keys[/gold] note to your Setlist.",
   "FLUIDLOVEBAND-FLUID.title": "Fluid",
-  "FLUIDLOVEBAND-FLUID.description": "Changes role every turn: [gold]Lead[/gold], then [gold]Rhythm[/gold], then [gold]Keys[/gold], and round again. The Setlist bar shows which role Fluid cards play this turn."
+  "FLUIDLOVEBAND-FLUID.description": "Role changes each turn: [gold]Lead[/gold], [gold]Rhythm[/gold], [gold]Keys[/gold]. The Setlist panel shows which."
 }
