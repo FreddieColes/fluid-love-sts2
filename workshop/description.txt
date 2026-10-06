@@ -1,0 +1,13 @@
+[h1]The Fluid Love Band[/h1]
+Play as Alex, Toby and Freddie (plus a laptop running the drum track), a country rock folk electric disco band playing their way up the Spire.
+
+[h2]The Setlist[/h2]
+Every card has a band role: [b]Lead[/b], [b]Rhythm[/b] or [b]Keys[/b]. Playing it adds a note to your 3-slot Setlist. Fill it to play a Song:
+[list]
+[*][b]Solo[/b] (3 the same): Lead hits ALL enemies, Rhythm gives big Block, Keys draws and gives Energy
+[*][b]Full Band[/b] (one of each): gain [b]Groove[/b], which powers up every later Song
+[*][b]Jam[/b] (2 + 1): half a Solo
+[/list]
+[b]Fluid[/b] cards change role each turn, so you can steer which Song you get.
+
+Requires [b]BaseLib[/b]. Work in progress: early access builds may break after game updates.

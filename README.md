@@ -16,3 +16,6 @@ three notes play a Song. Built on BaseLib 3.4.5 for game v0.107.x.
 - `FluidLoveBandCode/Cards` — cards (each has a band role)
 - `FluidLoveBandCode/Relics`, `Potions`, `Powers`, `Character`
 - `FluidLoveBand/images`, `FluidLoveBand/localization/eng` — art and text
+
+## Steam Workshop
+`./publish.sh "change note"` uploads the last build (private on first upload). Then add BaseLib as a Required item on the Workshop page.
