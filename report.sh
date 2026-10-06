@@ -7,6 +7,7 @@ git config user.name >/dev/null || git config user.name "Freddie"
 dotnet --info 2>/dev/null | head -5 > logs/env.txt
 ls -la /workspaces/sts2-game 2>/dev/null | head -30 >> logs/env.txt
 ls out/mods/FluidLoveBand 2>/dev/null >> logs/env.txt
+git add -A
 git add -f logs/
 git commit -qm "logs $(date -u +%H:%M)" || true
-git pull -q --rebase && git push -q && echo "Report pushed. Tell Claude 'report pushed'."
+git pull -q --rebase --autostash && git push -q && echo "Report pushed. Tell Claude 'report pushed'."

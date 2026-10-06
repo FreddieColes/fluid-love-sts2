@@ -40,7 +40,7 @@ read -rp "Steam username: " STEAM_USER
 NEWID=$(grep -oP '"publishedfileid"\s*"\K[0-9]+' "$STAGE/item.vdf")
 if [ -n "$NEWID" ] && [ "$NEWID" != "0" ]; then
   echo "$NEWID" > workshop/id.txt
-  git add workshop/id.txt && git commit -qm "workshop id $NEWID" && git pull -q --rebase && git push -q
+  git add workshop/id.txt && git commit -qm "workshop id $NEWID" && git pull -q --rebase --autostash && git push -q
   echo
   echo "Uploaded. Page: https://steamcommunity.com/sharedfiles/filedetails/?id=$NEWID"
   echo "It's PRIVATE. On that page: add BaseLib under Required items, then set visibility when ready."
