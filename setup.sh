@@ -12,7 +12,10 @@ touch logs/.gdignore out/.gdignore dist/.gdignore
 
 echo "== 1/4 System packages"
 sudo dpkg --add-architecture i386 >/dev/null 2>&1 || true
-sudo apt-get update -qq
+# The base image ships a Yarn apt source with an expired key; it breaks apt-get update. We don't need Yarn.
+sudo rm -f /etc/apt/sources.list.d/yarn*.list
+sudo grep -rl "dl.yarnpkg.com" /etc/apt/sources.list.d/ 2>/dev/null | xargs -r sudo rm -f
+sudo apt-get update -qq || echo "   (apt update had warnings, carrying on)"
 sudo apt-get install -y -qq lib32gcc-s1 unzip zip curl libfontconfig1 >/dev/null
 
 echo "== 2/4 Slay the Spire 2 files (Windows build, via SteamCMD)"
